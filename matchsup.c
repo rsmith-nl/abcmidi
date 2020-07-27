@@ -807,10 +807,9 @@ int n, m, dochecking;
   };
 }
 
-void event_octave(num, local)
+void event_octave(int num, int local)
 /* used internally by other routines when octave=N is encountered */
 /* in I: or K: fields */
-int num;
 {
   if (dotune) {
     if (pastheader || local) {
