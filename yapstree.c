@@ -1305,16 +1305,12 @@ char *p;
 {
 }
 
-void event_x_reserved(p)
-char p;
+void event_x_reserved(char p)
 {
 }
 
-void event_abbreviation(symbol, string, container)
+void event_abbreviation(char symbol, char *string, char container)
 /* abbreviation declaratiion - handled by parser. Ignore it here */
-char symbol;
-char *string;
-char container;
 {
 }
 
@@ -1413,8 +1409,7 @@ static void divide_ties()
   };
 }
 
-void event_endmusicline(endchar)
-char endchar;
+void event_endmusicline(char endchar)
 /* We are at the end of a line of abc notes */
 {
   cv->lineend = addfeature(MUSICSTOP, (void*)NULL);
@@ -1529,9 +1524,7 @@ char *str; /* string following first word */
   font_command(p, s);
 }
 
-void event_field(k, f)
-char k;
-char *f;
+void event_field(char k, char *f)
 /* A field line has been encountered in the input abc */
 {
   switch (k) {
@@ -2560,9 +2553,7 @@ void event_tie()
   };
 }
 
-void event_lineend(ch, n)
-char ch;
-int n;
+void event_lineend(char ch, int n)
 /* Line ending with n copies of special character ch */
 {
 }
@@ -2896,19 +2887,14 @@ int decorators[DECSIZE];
   xevent_rest(n, m, 0);
 }
 
-void event_mrest(n,m,c)
-int n, m;
-char c; /* [SS] 2017-04-19 to distinguish X from Z in abc2abc */
+void event_mrest(int n, int m, char c) /* [SS] 2017-04-19 to distinguish X from Z in abc2abc */
 /* A multiple bar rest has been encountered in the abc */
 {
   xevent_rest(1, 1, n);
 }
 
-void event_note(decorators, xaccidental, xmult, xnote, xoctave, n, m)
-int decorators[DECSIZE];
-int xmult;
-char xaccidental, xnote;
-int xoctave, n, m;
+void event_note(int decorators[DECSIZE], char accidental, int mult,
+                       char note, int xoctave, int n, int m)
 /* note found in abc */
 {
   struct note* nt;
@@ -2916,7 +2902,7 @@ int xoctave, n, m;
   struct chord* thechord;
   int pitchval;
 
-  nt = newnote(decorators, xaccidental, xmult, xnote, xoctave+cv->octaveshift, 
+  nt = newnote(decorators, accidental, mult, note, xoctave+cv->octaveshift, 
                n * cv->unitlen.num, m * cv->unitlen.denom);
   nt->tuplenotes = cv->tuplenotes;
   noteplace = addfeature(NOTE, nt);
@@ -2931,7 +2917,7 @@ int xoctave, n, m;
     advance_ties();
   } else {
     thechord = cv->thischord;
-    pitchval = notenum(xoctave, xnote, cv->clef->type, cv->clef->octave);
+    pitchval = notenum(xoctave, note, cv->clef->type, cv->clef->octave);
     if (cv->chordcount == 0) {
       thechord->ytop = pitchval;
       thechord->ybot = pitchval;
