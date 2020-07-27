@@ -1166,21 +1166,17 @@ char *s;
   if (quiet == -1) event_warning(msg); /* [JM] 2018-02-22 */
 }
 
-void event_x_reserved(p)
+void event_x_reserved(char s)
 /* reserved character H-Z found in abc file */
-char p;
 {
   char msg[200];
 
-  sprintf(msg, "Ignoring reserved character %c", p);
+  sprintf(msg, "Ignoring reserved character %c", s);
   if (quiet == -1) event_warning(msg); /* [JM] 2018-02-22 */
 }
 
-void event_abbreviation(symbol, string, container)
+void event_abbreviation(char symbol, char *string, char container)
 /* abbreviation encountered - this is handled within the parser */
-char symbol;
-char *string;
-char container;
 {
 }
 
@@ -1794,9 +1790,8 @@ void event_startmusicline()
   addfeature(MUSICLINE, 0, 0, 0);
 }
 
-void event_endmusicline(endchar)
+void event_endmusicline(char endchar)
 /* finished parsing line of abc music */
-char endchar;
 {
   addfeature(MUSICSTOP, 0, 0, 0);
 }
@@ -2652,11 +2647,9 @@ void extract_filename(char *f)
   got_titlename = 1;
 }
 
-void event_field(k, f)
+void event_field(char k, char *f)
 /* Handles R: T: and any other field not handled elsewhere */
 /* Added code to handle C: field. */
-char k;
-char *f;
 {
   if (dotune) {
     switch (k) {
@@ -3258,10 +3251,8 @@ void event_space()
   /* printf("Space event\n"); */
 }
 
-void event_lineend(ch, n)
+void event_lineend(char ch, int n)
 /* called when \ or ! or * or ** is encountered at the end of a line */
-char ch;
-int n;
 {
   /* ignore */
 }
@@ -3502,11 +3493,10 @@ int decorators[DECSIZE];
   };
 }
 
-void event_mrest(n,m,c)
+void event_mrest(int n,int m,char c)
 /* multiple bar rest of n/m in the abc */
 /* we check for m == 1 in the parser */
-int n, m;
-char c; /* [SS] 2017-04-19 to distinguish X from Z in abc2abc */
+/* [SS] 2017-04-19 to distinguish X from Z in abc2abc */
 {
   int i;
   int decorators[DECSIZE];
@@ -4233,12 +4223,9 @@ int num, denom;
   };
 }
 
-void event_note(decorators, accidental, mult, note, xoctave, n, m)
+void event_note(int decorators[DECSIZE], char accidental, int mult,
+                       char note, int xoctave, int n, int m)
 /* handles a note in the abc */
-int decorators[DECSIZE];
-int mult;
-char accidental, note;
-int xoctave, n, m;
 {
   int num, denom;
   int octave;
@@ -5923,7 +5910,7 @@ for (i=0;i<notes;i++) {
   if ((j == REP_BAR || j == DOUBLE_REP) && (!bar_rep_found[voicenum])) {
     /* printf("missing BAR_REP for voice inserted for voice %d part %c\n",voicenum,part); [SS] 2011-04-19 */
      /*** add_leftrepeat_at[num2add] = voicestart[voicenum]+3; [SS] 2009-12-20*/
-     /***add_leftrepeat_at[num2add] = voicestart[voicenum]+2; /* [SS] 2009-12-20*/
+     /***add_leftrepeat_at[num2add] = voicestart[voicenum]+2; [SS] 2009-12-20*/
      add_leftrepeat_at[num2add] = voicestart[voicenum]+1; /* [SS] 2014-10-31*/
      num2add++;
      bar_rep_found[voicenum] = 1;
