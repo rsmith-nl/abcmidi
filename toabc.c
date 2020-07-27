@@ -796,8 +796,7 @@ char *p;
   inmusic = 0;
 }
 
-void event_reserved(p)
-char p;
+void event_reserved(char p)
 {
   emit_char(p);
   inmusic = 0;
@@ -842,8 +841,7 @@ void event_startmusicline()
   complete_bars(&voice[this_voice]);
 }
 
-void event_endmusicline(endchar)
-char endchar;
+void event_endmusicline(char endchar)
 /* encountered the end of a line of notes */
 {
 }
@@ -912,9 +910,7 @@ char *f;
 }
 
 
-void event_field(k, f)
-char k;
-char *f;
+void event_field(char k, char *f)
 {
   emit_char(k);
   emit_char(':');
@@ -1691,9 +1687,8 @@ int decorators[DECSIZE];
   };
 }
 
-void event_mrest(n,m,c)
-int n, m;
-char c; /* [SS] 2017-04-19 to distinguish X from Z */
+void event_mrest(int n, int m, char c)
+/* [SS] 2017-04-19 to distinguish X from Z */
 {
   inmusic = 1;
   emit_char(c); /* [SS] 2017-04-19 */
@@ -2191,9 +2186,7 @@ void event_tie()
   emit_string("-");
 }
 
-void event_lineend(ch, n)
-char ch;
-int n;
+void event_lineend(char ch, int n)
 {
   int i;
 
@@ -2208,13 +2201,9 @@ int n;
 /* [SS] 2016-05-05 */
 /* This function is used to transpose the key signature modifiers. */
 /* The code was borrowed from event_note1().                       */
-void transpose_note(xaccidental,xmult, xnote, xoctave, transpose,
-    accidental, mult, note, octave)
-char xaccidental, xnote;
-int xoctave, transpose;
-int xmult; /* 2017-07-11 */
-char *accidental, *note;
-int *octave, *mult;
+
+void transpose_note(char xaccidental,int xmult,char xnote,int xoctave,int transpose,
+    char* accidental, int* mult, char* note, int* octave)
 {
   *mult = 0; 
   if (transpose == 0 || drumchan) {
@@ -2486,16 +2475,13 @@ int xoctave, n, m;
 }
 
 
-void event_note(decorators, xaccidental, xmult, xnote, xoctave, n, m)
-int decorators[DECSIZE];
-int xmult;
-char xaccidental, xnote;
-int xoctave, n, m;
+void event_note(int decorators[DECSIZE], char accidental, int mult,
+                       char note, int xoctave, int n, int m)
 {
 if (nokey)
-  event_note2(decorators, xaccidental, xmult, xnote, xoctave, n, m);
+  event_note2(decorators, accidental, mult, note, xoctave, n, m);
 else
-  event_note1(decorators, xaccidental, xmult, xnote, xoctave, n, m);
+  event_note1(decorators, accidental, mult, note, xoctave, n, m);
 }
 
 
