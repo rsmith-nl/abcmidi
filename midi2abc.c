@@ -371,8 +371,7 @@ char* s;
    * Debian Bug report log #924947 [SS] 2019-08-11
    * https://bugs.debian.org/cgi-bin/bugreport.cgi?bug=924947
    */
-  numbytes = strlen(s)+2; /* [SS] 2019-08-11 */
-  if (numbytes > 1024) numbytes = 1024; /* [SS] 2019-08-11 */
+  numbytes = strlen(s)>1022?1024:strlen(s);
   p = (char*) checkmalloc(numbytes); /* [SS] 2019-04-13  2019-08-11*/
   strncpy(p, s,numbytes); /* [SS] 2017-08-30 [SDG] 2020-06-03 */
   return(p);
