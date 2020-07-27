@@ -2331,7 +2331,7 @@ int i;
 {
 int j;
   if (g_ptr >= (int) strlen(gchord_seq)) g_ptr = 0;
-  if ((i == g_ptr) ) {  /* [SS] 2018-06-23 */
+  if (i == g_ptr) {  /* [SS] 2018-06-23 */
     int len;
     char action;
 
@@ -3230,7 +3230,7 @@ int xtrack;
             if(feature[j] == VOICE) j = findvoice(j, trackvoice, xtrack);
           };
           barno = barno + 1;
-          if ((j == notes) /* || (feature[j] == PLAY_ON_REP) */) { 
+          if (j == notes)  { /* || (feature[j] == PLAY_ON_REP) */
           /* end of tune was encountered before finding end of */
           /* variant ending.  */
             sprintf(errmsg, 
