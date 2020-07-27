@@ -3831,8 +3831,8 @@ bendvalue = c53midi - (float) *midipitch;
 
 
 
-static void doroll(note, octave, n, m, pitch)
 /* applies a roll to a note */
+/*static void doroll(note, octave, n, m, pitch)
 char note;
 int octave, n, m;
 int pitch;
@@ -3864,7 +3864,7 @@ int pitch;
   bentpitch[notes] = active_pitchbend;
   addfeature(NOTE, pitch, n*4, m*(v->default_length)*5);
   marknoteend();
-}
+} */
 
 
 

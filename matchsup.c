@@ -1501,8 +1501,8 @@ char c;
   return (putc(c,fp));
 }
 
-static void addfract(xnum, xdenom, a, b)
 /* add a/b to the count of units in the bar */
+/*static void addfract(xnum, xdenom, a, b)
 int *xnum;
 int *xdenom;
 int a, b;
@@ -1510,130 +1510,130 @@ int a, b;
   *xnum = (*xnum)*b + a*(*xdenom);
   *xdenom = (*xdenom) * b;
   reduce(xnum, xdenom);
-}
+} */
 
 
-static void dotie(j, xinchord,voiceno)
 /* called in preprocessing stage to handle ties */
 /* we need the voiceno in case a tie is broken by a */
 /* voice switch.                                    */
-int j, xinchord,voiceno;
-{
-  int tienote, place;
-  int tietodo, done;
-  int lastnote, lasttie;
-  int inchord;
-  int tied_num, tied_denom;
-  int localvoiceno;
-  int samechord;
-
+/*static void dotie(j, xinchord,voiceno)
+int j, xinchord,voiceno;*/
+/*{*/
+/*  int tienote, place;*/
+/*  int tietodo, done;*/
+/*  int lastnote, lasttie;*/
+/*  int inchord;*/
+/*  int tied_num, tied_denom;*/
+/*  int localvoiceno;*/
+/*  int samechord;*/
+/**/
   /* find note to be tied */
-  samechord = 0;
-  if (xinchord) samechord = 1;
-  tienote = j;
-  localvoiceno = voiceno;
-  while ((tienote > 0) && (feature[tienote] != NOTE) &&
-         (feature[tienote] != REST)) {
-    tienote = tienote - 1;
-  };
-  if (feature[tienote] != NOTE) {
-    event_error("Cannot find note before tie");
-  } else {
-    inchord = xinchord;
+/*  samechord = 0;*/
+/*  if (xinchord) samechord = 1;*/
+/*  tienote = j;*/
+/*  localvoiceno = voiceno;*/
+/*  while ((tienote > 0) && (feature[tienote] != NOTE) &&*/
+/*         (feature[tienote] != REST)) {*/
+/*    tienote = tienote - 1;*/
+/*  };*/
+/*  if (feature[tienote] != NOTE) {*/
+/*    event_error("Cannot find note before tie");*/
+/*  } else {*/
+/*    inchord = xinchord;*/
     /* change NOTE + TIE to TNOTE + REST */
-    feature[tienote] = TNOTE;
-    feature[j] = REST;
-    num[j] = num[tienote];
-    denom[j] = denom[tienote];
-    place = j;
-    tietodo = 1;
-    lasttie = j;
-    tied_num = num[tienote];
-    tied_denom = denom[tienote];
-    lastnote = -1;
-    done = 0;
-    while ((place < notes) && (tied_num >=0) && (done == 0)) {
+/*    feature[tienote] = TNOTE;*/
+/*    feature[j] = REST;*/
+/*    num[j] = num[tienote];*/
+/*    denom[j] = denom[tienote];*/
+/*    place = j;*/
+/*    tietodo = 1;*/
+/*    lasttie = j;*/
+/*    tied_num = num[tienote];*/
+/*    tied_denom = denom[tienote];*/
+/*    lastnote = -1;*/
+/*    done = 0;*/
+/*    while ((place < notes) && (tied_num >=0) && (done == 0)) {*/
      /* printf("%d %s   %d %d/%d ",place,featname[feature[place]],pitch[place],num[place],denom[place]); */
-      switch (feature[place]) {
-        case NOTE:
-          if(localvoiceno != voiceno) break;
-          lastnote = place;
-          if ((tied_num == 0) && (tietodo == 0)) {
-            done = 1;
-          };
-          if ((pitchline[place] == pitchline[tienote])
-             && (tietodo == 1) && (samechord == 0)) {
+/*      switch (feature[place]) {*/
+/*        case NOTE:*/
+/*          if(localvoiceno != voiceno) break;*/
+/*          lastnote = place;*/
+/*          if ((tied_num == 0) && (tietodo == 0)) {*/
+/*            done = 1;*/
+/*          };*/
+/*          if ((pitchline[place] == pitchline[tienote])*/
+/*             && (tietodo == 1) && (samechord == 0)) {*/
             /* tie in note */
-            if (tied_num != 0) {
-              event_error("Time mismatch at tie");
-            };
-            tietodo = 0;
-	    pitch[place] = pitch[tienote]; /* in case accidentals did not
-					      propagate                   */
+/*            if (tied_num != 0) {*/
+/*              event_error("Time mismatch at tie");*/
+/*            };*/
+/*            tietodo = 0;*/
+/*	    pitch[place] = pitch[tienote];  in case accidentals did not*/
+/*					      propagate                   */
             /* add time to tied time */
-            addfract(&tied_num, &tied_denom, num[place], denom[place]);
+/*            addfract(&tied_num, &tied_denom, num[place], denom[place]);*/
             /* add time to tied note */
-            addfract(&num[tienote], &denom[tienote], num[place], denom[place]);
+/*            addfract(&num[tienote], &denom[tienote], num[place], denom[place]);*/
             /* change note to a rest */
-            feature[place] = REST;
+/*            feature[place] = REST;*/
             /* get rid of tie */
-            if (lasttie != j) {
-              feature[lasttie] = OLDTIE;
-            };
-          };
-          if (inchord == 0) {
+/*            if (lasttie != j) {*/
+/*              feature[lasttie] = OLDTIE;*/
+/*            };*/
+/*          };*/
+/*          if (inchord == 0) {*/
             /* subtract time from tied time */
-            addfract(&tied_num, &tied_denom, -num[place], denom[place]);
-          };
-          break;
-        case REST:
-          if(localvoiceno != voiceno) break;
-          if ((tied_num == 0) && (tietodo == 0)) {
-            done = 1;
-          };
-          if (inchord == 0) {
+/*            addfract(&tied_num, &tied_denom, -num[place], denom[place]);*/
+/*          };*/
+/*          break;*/
+/*        case REST:*/
+/*          if(localvoiceno != voiceno) break;*/
+/*          if ((tied_num == 0) && (tietodo == 0)) {*/
+/*            done = 1;*/
+/*          };*/
+/*          if (inchord == 0) {*/
             /* subtract time from tied time */
-            addfract(&tied_num, &tied_denom, -num[place], denom[place]);
-          };
-          break;
-        case TIE:
-          if(localvoiceno != voiceno) break;
-          if (lastnote == -1) {
-            event_error("Bad tie: possibly two ties in a row");
-          } else {
-            if (pitch[lastnote] == pitch[tienote] && samechord == 0) {
-              lasttie = place;
-              tietodo = 1;
-              if (inchord) samechord = 1;
-            };
-          };
-          break;
-        case CHORDON:
-          if(localvoiceno != voiceno) break;
-          inchord = 1;
-          break;
-        case CHORDOFF:
-        case CHORDOFFEX:
-          samechord = 0;
-          if(localvoiceno != voiceno) break;
-          inchord = 0;
+/*            addfract(&tied_num, &tied_denom, -num[place], denom[place]);*/
+/*          };*/
+/*          break;*/
+/*        case TIE:*/
+/*          if(localvoiceno != voiceno) break;*/
+/*          if (lastnote == -1) {*/
+/*            event_error("Bad tie: possibly two ties in a row");*/
+/*          } else {*/
+/*            if (pitch[lastnote] == pitch[tienote] && samechord == 0) {*/
+/*              lasttie = place;*/
+/*              tietodo = 1;*/
+/*              if (inchord) samechord = 1;*/
+/*            };*/
+/*          };*/
+/*          break;*/
+/*        case CHORDON:*/
+/*          if(localvoiceno != voiceno) break;*/
+/*          inchord = 1;*/
+/*          break;*/
+/*        case CHORDOFF:*/
+/*        case CHORDOFFEX:*/
+/*          samechord = 0;*/
+/*          if(localvoiceno != voiceno) break;*/
+/*          inchord = 0;*/
           /* subtract time from tied time */
-          addfract(&tied_num, &tied_denom, -num[place], denom[place]);
-          break;
-        case VOICE:
-          localvoiceno = pitch[place];
-        default:
-          break;
-      };
+/*          addfract(&tied_num, &tied_denom, -num[place], denom[place]);*/
+/*          break;*/
+/*        case VOICE:*/
+/*          localvoiceno = pitch[place];*/
+/*        default:*/
+/*          break;*/
+/*      };*/
       /*printf("tied_num = %d done = %d inchord = %d\n",tied_num, done, inchord); */
-      place = place + 1;
-    };
-    if (tietodo == 1) {
-      event_error("Could not find note to be tied");
-    };
-  };
+/*      place = place + 1;*/
+/*    };*/
+/*    if (tietodo == 1) {*/
+/*      event_error("Could not find note to be tied");*/
+/*    };*/
+/*  };*/
 /* printf("dotie finished\n"); */
-}
+/*}*/
 
 static void tiefix()
 /* connect up tied notes and cleans up the */

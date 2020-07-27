@@ -331,8 +331,8 @@ static int getISO(char s[], int j, int* code)
   return(i);
 }
 
-static void ISOdecode(char s[], char out[])
 /* convert coded characters to straight 8-bit ascii */
+/*static void ISOdecode(char s[], char out[])
 {
   int i, j, len;
   int code;
@@ -346,7 +346,7 @@ static void ISOdecode(char s[], char out[])
     j = j + 1;
   };
   out[j] = '\0';
-}
+} */
 
 static void ISOfprintf(char s[])
 /* interpret special characters and print to file */
@@ -2922,13 +2922,13 @@ if (x + 15.0 > scaledwidth) return;
 fprintf(f, " %.1f %.1f (%d) bnum\n", x, 28.0, n); 
 }
 
-static void underbar(struct feature* ft)
 /* This is never normally called, but is useful as a debugging routine */
 /* shows width of a graphical element */
+/* static void underbar(struct feature* ft)
 {
   fprintf(f, " %.1f -10 moveto %.1f -10 lineto stroke\n", ft->x - ft->xleft,
                                                        ft->x + ft->xright);
-}
+} */
 
 static int printvoiceline(struct voice* v)
 /* draws one line of music from specified voice */
