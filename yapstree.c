@@ -38,6 +38,7 @@
 #include <ctype.h>
 #include <stdlib.h>
 #include <string.h>
+#include <stdint.h>
 #else
 char* strchr();
 #endif
@@ -1334,8 +1335,7 @@ event_error("extended overlay not implemented in yaps");
 
 void event_split_voice()
 {
-/* [SS] 2015-11-15 * changed (void*) to (int *) */
-addfeature(SPLITVOICE, (int *)  lineno);
+addfeature(SPLITVOICE, (void *) ((intptr_t) lineno));
 event_error("voice split not implemented in yaps");
 }
 
@@ -1350,7 +1350,7 @@ void event_linebreak()
 {
 /* [SS] 2015-11-15 * changed (void*) to (int *) */
   if (xinbody) {
-    addfeature(LINENUM, (int *)lineno);
+    addfeature(LINENUM, (void *)((intptr_t) lineno));
   };
 }
 
@@ -1510,7 +1510,7 @@ char *str; /* string following first word */
           vskip(vspace);
         };
       } else {
-        addfeature(VSKIP, (int*)((int)vspace));
+        addfeature(VSKIP, (void*)((intptr_t)vspace));
       };
     };
   };
@@ -2172,7 +2172,7 @@ char* playonrep_list;
   };
   checkbar(type); /* increment bar number if bar complete */
 /* [SS] 2015-11-15 * changed (void*) to (int *) */
-  addfeature(type, (int *)cv->barno); /* save bar number */
+  addfeature(type, (void *)((intptr_t) cv->barno)); /* save bar number */
   switch(type) {
   case SINGLE_BAR:
     break;
