@@ -485,7 +485,7 @@ alloc_trackdata ()
   if (trackdata != NULL)
     free (trackdata);
 /* double it since running status is not preserved [SS] 2013-10-08 */
-/* add another two bytes to cover winamp_compatibility
+/* add another two bytes to cover winamp_compatibility */
 /* for very short tracks. [SS] 2017-09-12 */
 /* There is no penalty for allocating to much. */
   if (Mf_toberead < 2) Mf_toberead = 64; /* to handle MIDI header */
@@ -946,7 +946,7 @@ void
 metaevent (int type)
 {
   int leng;
-  unsigned char *m;
+  char *m;
   long qnote;			/* [SS] 2013-09-06 */
 
   leng = msgleng ();
