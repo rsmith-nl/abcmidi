@@ -1362,7 +1362,7 @@ int chan, pitch, vol;
     return;
     }
  trkdata.notemeanpitch[chan+1] += pitch;
- if (abs(Mf_currtime - last_on_tick[chan+1]) < chordthreshold) trkdata.chordcount[chan+1]++;
+ if (labs(Mf_currtime - last_on_tick[chan+1]) < chordthreshold) trkdata.chordcount[chan+1]++;
  else trkdata.notecount[chan+1]++; /* [SS] 2019-08-02 */
  last_tick[chan+1] = Mf_currtime;
  last_on_tick[chan+1] = Mf_currtime; /* [SS] 2019-08-02 */
@@ -3325,8 +3325,8 @@ void remove_carriage_returns(char *str)
    abc file.
 */
 char * loc;
-while (loc  = (char *) strchr(str,'\r')) *loc = ' ';
-while (loc  = (char *) strchr(str,'\n')) *loc = ' ';
+while ((loc = (char *) strchr(str,'\r'))) *loc = ' ';
+while ((loc = (char *) strchr(str,'\n'))) *loc = ' ';
 }
 
 
