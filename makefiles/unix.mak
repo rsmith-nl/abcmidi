@@ -31,9 +31,8 @@
 # cure the problem, change this file from using PC-style end-of-line (carriage 
 # return and line feed) to unix style end-of-line (line feed).
 
-CC=gcc
 CFLAGS=-DANSILIBS -O2 
-LNK=gcc
+LNK=${CC}
 INSTALL=install
 
 prefix=/usr/local
@@ -45,14 +44,14 @@ mandir=share/man/man1
 
 all : abc2midi midi2abc abc2abc mftext yaps midicopy abcmatch
 
-abc2midi : parseabc.o store.o genmidi.o midifile.o queues.o parser2.o stresspat.o -lm
+abc2midi : parseabc.o store.o genmidi.o midifile.o queues.o parser2.o stresspat.o
 	$(LNK) -o abc2midi parseabc.o store.o genmidi.o queues.o \
-	parser2.o midifile.o stresspat.o
+	parser2.o midifile.o stresspat.o -lm
 
 abc2abc : parseabc.o toabc.o
 	$(LNK) -o abc2abc parseabc.o toabc.o
 
-midi2abc : midifile.o midi2abc.o 
+midi2abc : midifile.o midi2abc.o
 	$(LNK) midifile.o midi2abc.o -o midi2abc -lm
 
 mftext : midifile.o mftext.o crack.o
@@ -113,7 +112,7 @@ debug.o: debug.c structs.h abc.h
 matchsup.o : matchsup.c abc.h parseabc.h parser2.h
 
 clean :
-	rm *.o ${binaries}
+	rm -f *.o ${binaries}
 
 install: abc2midi midi2abc abc2abc mftext midicopy yaps abcmatch
 	$(INSTALL) -m 755 ${binaries} ${prefix}/${bindir}
