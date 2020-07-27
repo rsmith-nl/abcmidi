@@ -2141,6 +2141,8 @@ static void handlebeam(struct note* n, struct feature* ft)
     };
     n->stemup = rootstem;
     break;
+  case nostem:
+    break;
   };
 }
 
