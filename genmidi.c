@@ -1528,8 +1528,6 @@ void articulated_stress_factors (int n,  int *vel)
   /* determine the segment number by dividing by the segment size
    * and truncating the result.
    * firstseg = integer (begnum/begden divided by segnum/segden) */
-  begnum = begnum;
-  begden = begden;
   firstsegnum = begnum*segden;
   firstsegden = begden*segnum*4;
   reduce (&firstsegnum,&firstsegden);
@@ -1537,8 +1535,6 @@ void articulated_stress_factors (int n,  int *vel)
   firstseg = firstsegnum/firstsegden;
   firstsegrem = firstsegnum % firstsegden;
   /* lastseg = integer (endnum/endden divided by resnum/resden) */
-  endnum = endnum;
-  endden = endden;
   lastsegnum = endnum*segden;
   lastsegden = endden*segnum*4;
   reduce(&lastsegnum,&lastsegden);

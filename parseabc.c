@@ -612,7 +612,6 @@ isclef (s, gotoctave, octave, strict)
 /* alto, mezzo, soprano or K:clef=arbitrary                          */
 {
   int gotclef;
-  s = s;
   gotclef = 0;
   if (strncmp (s, "bass", 4) == 0)
     {
