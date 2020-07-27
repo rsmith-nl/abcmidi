@@ -206,10 +206,7 @@ extendvstring (s)
     };
 }
 
-void
-addch (ch, s)
-     char ch;
-     struct vstring *s;
+void addch(char ch, struct vstring* s)
 /* appends character to vstring structure */
 {
   if (s->len >= s->limit)
